@@ -1,13 +1,25 @@
+const bodyParser = require('body-parser');
 const express = require('express');
+const cors = require('cors');
+const router = require('./routes');
 
 const app = express();
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:true}))
+app.use(cors('*'))
 
-app.use (( )=> {
-    console.log('hello server...');
-    console.log('hello dua...');
-    console.log('hello satu...');
-}
+const port = process.env.PORT || 8000;
 
-)
+app.get("/test", (req,res) => {
+  res.status(200).send({
+    status: true,
+    message: "api is running"
+  })
+})
 
-app.listen(4000);
+
+app.use(router)
+
+app.listen(port, () => {
+  console.log("server is running")
+})
